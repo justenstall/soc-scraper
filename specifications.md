@@ -17,19 +17,6 @@ Need to be able to provide a keyword list to filter posts by. This keywords list
 
 Look into what profile information is accessible to see if the tool could return a region location for each post/comment/user
 
-## Scraping
-
-The goal is to use an open-source Facebook scraper.
-
-Open source scraper options:
-
-- [facebook-scraper](https://github.com/kevinzg/facebook-scraper)
-  - Most popular option on GitHub
-  - Seems full featured
-  - Provides a CLI
-- [facebook-post-scraper](https://github.com/brutalsavage/facebook-post-scraper)
-  - Contains limited comments support
-
 ## Concerns
 
 - Need to be careful with the scraping quantity and speed to avoid getting IP addresses temporarily banned or any sort of consequences for the user's Facebook account.
