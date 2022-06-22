@@ -1,0 +1,51 @@
+post_url  :  https://m.facebook.com/groups/babysleeptrainingtips/permalink/554825486189601/
+link  :  None
+links  :  []
+user_id  :  100053313801794
+username  :  Lexi Iannone
+user_url  :  https://facebook.com/lexi.iannone.75?groupid=304508841221268&_ft_=qid.-6191683055719403932%3Amf_story_key.554825486189601%3Atop_level_post_id.554825486189601%3Atl_objid.554825486189601%3Acontent_owner_id_new.100053313801794%3Aoriginal_content_id.327902982855255%3Aoriginal_content_owner_id.100069066671782%3Apage_id.489671061228229%3Asrc.22%3Astory_location.6%3Aattached_story_attachment_style.photo%3Afilter.GroupStoriesByActivityEntQuery%3Aott.AX_SE4QmqECL-AMZ%3Aattached_story_type.EntStatusCreationStory%3Aattached_story_attachment_type.MediaAttachment%3Apage_insights.%7B%22100069066671782%22%3A%7B%22page_id%22%3A100069066671782%2C%22page_id_type%22%3A%22page%22%2C%22actor_id%22%3A100053313801794%2C%22attached_story%22%3A%7B%22page_id%22%3A100069066671782%2C%22page_id_type%22%3A%22page%22%2C%22actor_id%22%3A100069066671782%2C%22dm%22%3A%7B%22isShare%22%3A0%2C%22originalPostOwnerID%22%3A0%7D%2C%22psn%22%3A%22EntStatusCreationStory%22%2C%22post_context%22%3A%7B%22object_fbtype%22%3A266%2C%22publish_time%22%3A1654550387%2C%22story_name%22%3A%22EntStatusCreationStory%22%2C%22story_fbid%22%3A%5B327902982855255%5D%7D%2C%22role%22%3A1%2C%22sl%22%3A6%7D%2C%22dm%22%3A%7B%22isShare%22%3A0%2C%22originalPostOwnerID%22%3A0%7D%2C%22psn%22%3A%22EntGroupMallPostCreationStory%22%2C%22role%22%3A1%2C%22sl%22%3A6%2C%22targets%22%3A%5B%7B%22actor_id%22%3A100053313801794%2C%22page_id%22%3A100069066671782%2C%22post_id%22%3A327902982855255%2C%22role%22%3A1%2C%22share_id%22%3A0%7D%5D%7D%2C%22304508841221268%22%3A%7B%22page_id%22%3A304508841221268%2C%22page_id_type%22%3A%22group%22%2C%22actor_id%22%3A100053313801794%2C%22dm%22%3A%7B%22isShare%22%3A1%2C%22originalPostOwnerID%22%3A327902982855255%7D%2C%22psn%22%3A%22EntGroupMallPostCreationStory%22%2C%22post_context%22%3A%7B%22object_fbtype%22%3A657%2C%22publish_time%22%3A1654614868%2C%22story_name%22%3A%22EntGroupMallPostCreationStory%22%2C%22story_fbid%22%3A%5B554825486189601%5D%7D%2C%22role%22%3A1%2C%22sl%22%3A6%7D%7D%3Aactrs.100053313801794%3Atds_flgs.3%3Aftmd_400706.111111l&__tn__=C-R
+is_live  :  False
+factcheck  :  None
+shared_post_id  :  327902982855255
+shared_time  :  2022-06-06 17:19:00
+shared_user_id  :  100069066671782
+shared_username  :  Safe Infant Sleep
+shared_post_url  :  https://facebook.com/story.php?story_fbid=327902982855255&id=100069066671782
+available  :  True
+comments_full  :  None
+reactors  :  None
+w3_fb_url  :  None
+reactions  :  None
+reaction_count  :  None
+with  :  [{'name': 'post', 'link': '/story.php?story_fbid=327902982855255&id=100069066671782&_ft_=qid.-6191683055719403932%3Amf_story_key.554825486189601%3Atop_level_post_id.554825486189601%3Atl_objid.554825486189601%3Acontent_owner_id_new.100053313801794%3Aoriginal_content_id.327902982855255%3Aoriginal_content_owner_id.100069066671782%3Apage_id.489671061228229%3Asrc.22%3Astory_location.6%3Aattached_story_attachment_style.photo%3Afilter.GroupStoriesByActivityEntQuery%3Aott.AX_SE4QmqECL-AMZ%3Aattached_story_type.EntStatusCreationStory%3Aattached_story_attachment_type.MediaAttachment%3Apage_insights.%7B%22100069066671782%22%3A%7B%22page_id%22%3A100069066671782%2C%22page_id_type%22%3A%22page%22%2C%22actor_id%22%3A100053313801794%2C%22attached_story%22%3A%7B%22page_id%22%3A100069066671782%2C%22page_id_type%22%3A%22page%22%2C%22actor_id%22%3A100069066671782%2C%22dm%22%3A%7B%22isShare%22%3A0%2C%22originalPostOwnerID%22%3A0%7D%2C%22psn%22%3A%22EntStatusCreationStory%22%2C%22post_context%22%3A%7B%22object_fbtype%22%3A266%2C%22publish_time%22%3A1654550387%2C%22story_name%22%3A%22EntStatusCreationStory%22%2C%22story_fbid%22%3A%5B327902982855255%5D%7D%2C%22role%22%3A1%2C%22sl%22%3A6%7D%2C%22dm%22%3A%7B%22isShare%22%3A0%2C%22originalPostOwnerID%22%3A0%7D%2C%22psn%22%3A%22EntGroupMallPostCreationStory%22%2C%22role%22%3A1%2C%22sl%22%3A6%2C%22targets%22%3A%5B%7B%22actor_id%22%3A100053313801794%2C%22page_id%22%3A100069066671782%2C%22post_id%22%3A327902982855255%2C%22role%22%3A1%2C%22share_id%22%3A0%7D%5D%7D%2C%22304508841221268%22%3A%7B%22page_id%22%3A304508841221268%2C%22page_id_type%22%3A%22group%22%2C%22actor_id%22%3A100053313801794%2C%22dm%22%3A%7B%22isShare%22%3A1%2C%22originalPostOwnerID%22%3A327902982855255%7D%2C%22psn%22%3A%22EntGroupMallPostCreationStory%22%2C%22post_context%22%3A%7B%22object_fbtype%22%3A657%2C%22publish_time%22%3A1654614868%2C%22story_name%22%3A%22EntGroupMallPostCreationStory%22%2C%22story_fbid%22%3A%5B554825486189601%5D%7D%2C%22role%22%3A1%2C%22sl%22%3A6%7D%7D%3Aactrs.100053313801794%3Atds_flgs.3%3Aftmd_400706.111111l&__tn__=C-R'}]
+page_id  :  489671061228229
+sharers  :  None
+image_id  :  328392009473019
+image_ids  :  ['328392009473019']
+was_live  :  False
+header  :  Lexi Iannone shared a post.
+post_id  :  554492332889583
+text  :  How do y'all deal with letting your babies cry it out? I am currently sleep training my 8 month old using the Ferber method and I am DYING! This is a different kind of cry and it is HORRIBLE 😭😭 How do y'all deal with this and stick with it? I know it's for his own good, but my GOD, it sounds like he's being murdered 😭😭😭
+post_text  :  How do y'all deal with letting your babies cry it out? I am currently sleep training my 8 month old using the Ferber method and I am DYING! This is a different kind of cry and it is HORRIBLE 😭😭 How do y'all deal with this and stick with it? I know it's for his own good, but my GOD, it sounds like he's being murdered 😭😭😭
+shared_text  :  
+original_text  :  None
+time  :  2022-06-06 22:52:55
+timestamp  :  1654570375
+image  :  None
+image_lowquality  :  https://scontent.xx.fbcdn.net/m1/v/t6/An_UvxJXg9tdnLU3Y5qjPi0200MLilhzPXUgxzGjQzUMaNcmjdZA6anyrngvkdub33NZzZhd51fpCAEzNHFhko5aKRFP5fS1w_lKwYrzcNLupv27.png?ccb=10-5&oh=00_AT8cPJ8VncPtsnhDMEbCg-eMgIJ7XcC0H2gcU8E5xCFRmQ&oe=62A6F179&_nc_sid=55e238
+images  :  []
+images_description  :  []
+images_lowquality  :  ['https://scontent.xx.fbcdn.net/m1/v/t6/An_UvxJXg9tdnLU3Y5qjPi0200MLilhzPXUgxzGjQzUMaNcmjdZA6anyrngvkdub33NZzZhd51fpCAEzNHFhko5aKRFP5fS1w_lKwYrzcNLupv27.png?ccb=10-5&oh=00_AT8cPJ8VncPtsnhDMEbCg-eMgIJ7XcC0H2gcU8E5xCFRmQ&oe=62A6F179&_nc_sid=55e238', 'https://scontent.xx.fbcdn.net/m1/v/t6/An-0mG6nK_Uk-eBw_Z5hXaQPl2Il-GAtgNisMF_CPi6qvu85Lx2-5PalMJvS7fIbuodHct0V3tJrvSxzau9mOcNxqVhoiy8lxxQ9edz-6r6_o9YroQ.png?ccb=10-5&oh=00_AT-sq57loZzOcAw7SXsJzXA1RurcSEbosNCjIYRTmtwYDw&oe=62A5AA84&_nc_sid=55e238', 'https://scontent.xx.fbcdn.net/m1/v/t6/An-9fyYLftTy_Mg2cJpugh-vEVNfbtI-fVn4FNS7K-sgIMu9pT62Tb1u9Dfm-xYLtjbLQk-yVHp_IlY_4iMVYp0xLpO7sJvbxbC2OIiRxzS02cOuKEoo.png?ccb=10-5&oh=00_AT8Uad1HrJN_sgN0B5wYEdf3tKIlJCgz-Oo_RhckPv2dyQ&oe=62A5A858&_nc_sid=55e238']
+images_lowquality_description  :  ['Like', 'Sad', 'Care']
+video  :  None
+video_duration_seconds  :  None
+video_height  :  None
+video_id  :  None
+video_quality  :  None
+video_size_MB  :  None
+video_thumbnail  :  None
+video_watches  :  None
+video_width  :  None
+likes  :  86
+comments  :  165
+shares  :  1

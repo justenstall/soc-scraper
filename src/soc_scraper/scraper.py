@@ -4,93 +4,99 @@ import csv
 from datetime import datetime
 import os
 
-# Keyword list
-keyword_list = ['sleep', 'sleep_training']
+# Path to facebook cookies
+cookies_path = '/Users/justenstall/Downloads/facebook.com_cookies.txt'
+
+# Name of group to scrape
+group_name = 'babysleeptrainingtips'
+
+# Keyword list: keywords are checked against all possible variations of the word 
+keyword_list = ['sleep', 'sleep train', 'co-sleep']
 
 # Minimum amount of comments
 comment_minimum = 50
 
 # Names that need may need censored from comment replies
-censor_names = []
+redact_list = []
 
+# scrape the specified group for posts
+# output is a collection of CSV files, in a folder named by the group and the time requested, and organized into one subfolder per keyword
 def scrape():
-    now = datetime.now()
-    posts_dir = '{keywords}_{time}'.format(keywords='-'.join(keyword_list), time=now.strftime("%m-%d_%H-%M-%S"))
-
-    os.makedirs(posts_dir)
-
-    print('Created results directory:', posts_dir)
-
     # Get posts from facebook-scraper
-    posts = facebook_scraper.get_posts(group='babysleeptrainingtips', pages=3, cookies="/Users/justenstall/Downloads/facebook.com_cookies.txt", options={"comments": True})
+    posts = facebook_scraper.get_posts(group=group_name, pages=10, sleep=5,cookies=cookies_path, options={"comments": True, "progress": True})
+
+    # Create result directory for data to output to
+    result_dir = '{group}_{time}'.format(group=group_name, time=datetime.now().strftime("%m-%d_%H-%M-%S"))
+    os.makedirs(result_dir)
+    print('Created results directory:', result_dir)
+
+    # Filter for keyword matches
+    for keyword in keyword_list:
+        os.makedirs(os.path.join(result_dir, keyword))
+
+    posts_json = []
 
     # Loop through posts to create list
     for post in posts:
+        posts_json.append(post)
+
+        keyword_match_list = []
+        for keyword in keyword_list:
+            if check_keyword(keyword, post['text']):
+                keyword_match_list.append(keyword)
+
         # Filter by comment count
         if post['comments'] < comment_minimum:
             continue
 
-        # Filter for keyword matches
-        keyword_match = False
-        for keyword in keyword_list:
-            if keyword.lower() in post['text'].lower():
-                keyword_match = True
-
-        if not keyword_match:
-            continue
-
+        post_and_comments = []
         post_and_comments = parse_post(post)
 
-        for item in post_and_comments:
-            for name in censor_names:
-                item['text'].replace(name, '[NAME REDACTED]')
+        post_and_comments = redact_posts(post_and_comments)
+ 
+        if len(post_and_comments) > 0:
+            keys = post_and_comments[0].keys()
 
-        # TODO: write to JSON file named post ID
+            for keyword in keyword_match_list:
+                with open(os.path.join(result_dir, keyword, '{}.csv'.format(post['post_id'])), 'w', encoding='utf-8-sig', newline='') as output_file:
+                    dict_writer = csv.DictWriter(output_file, keys)
+                    dict_writer.writeheader()
+                    dict_writer.writerows(post_and_comments)
 
-        keys = post_and_comments[0].keys()
+    # Dump full content before parsing more
+    with open(os.path.join(result_dir, "posts_full.json"), "w", encoding ='utf8') as output_file:
+        json.dump(posts_json, output_file, ensure_ascii=False, indent=4)
 
-        with open(os.path.join(posts_dir, '{}.csv'.format(post['post_id'])), 'w', newline='') as output_file:
-            dict_writer = csv.DictWriter(output_file, keys)
-            dict_writer.writeheader()
-            dict_writer.writerows(post_and_comments)
+# Return true if keyword is found
+def check_keyword(keyword, text):
+    return string_sanitize(keyword) in string_sanitize(text)
 
-    # TODO: change output shape to two dimensional array (flatten comments and replies into single list)
-    # TODO: remove names from comment text
+# Remove all non-alphanumeric characters and cast to lowercase
+def string_sanitize(string):
+    return ''.join(e for e in string if e.isalnum()).lower()
 
-    # with open('result.json', 'w') as fp:
-    #     json.dump(formatted_posts, fp)
-            
-
-# text stores the post's text
-# comments_full stores a list of comment dicts for each post
-# comment_text stores the comment's text
-# replies stores a list of comments responding to that comment
-# commenter_id stores a number that refers to the user
-# comment_time is the time the comment was made
-
-# Considerations: remove commenter name from replies to their comment
-
+# Parse post and all of its comments
 def parse_post(post):
     post_and_comments = []
 
     # Create post and add to list
-    post_dict = {
-        'id': post['post_id'],
-        'url': post['post_url'],
-        'text': post['text'],
-        'time': post['time'].strftime("%m/%d/%Y, %H:%M:%S"),
-        'reply_to': '',
-    }
+    post_dict = create_post_dict(
+        post['post_id'], 
+        post['post_url'], 
+        '', 
+        post['text'], 
+        post['time'],
+    )
     post_and_comments.append(post_dict)
 
     print("Scraped post:", post_dict['url'])
 
     # Store poster name to censor
-    censor_names.append(post['username'])
+    redact_list.append(post['username'])
 
     for comment in post['comments_full']:
         comment_and_replies = parse_comment(post['post_id'], comment)
-        post_and_comments.extend(comment_and_replies)
+        post_and_comments.extend(comment_and_replies) # use extend because this is list concatenation
     
     return post_and_comments
 
@@ -108,11 +114,11 @@ def parse_comment(post_id, comment):
     comment_and_replies.append(comment_dict)
 
     # Store commenter name to censor
-    censor_names.append(comment['commenter_name'])
+    redact_list.append(comment['commenter_name'])
 
     for reply in comment['replies']:
         reply_dict = parse_reply(comment['comment_id'], reply)
-        comment_and_replies.extend(iterable)(reply_dict)
+        comment_and_replies.append(reply_dict)
     
     return comment_and_replies
 
@@ -125,7 +131,7 @@ def parse_reply(comment_id, reply):
         reply['comment_time']
     )
 
-    censor_names.append(reply['commenter_name'])
+    redact_list.append(reply['commenter_name'])
 
     return reply_dict
 
@@ -137,6 +143,13 @@ def create_post_dict(id, url, reply_to, text, time):
         'text': text,
         'time': time.strftime("%m/%d/%Y, %H:%M:%S"),
     }
+
+def redact_posts(posts):
+    print(posts)
+    for item in posts:
+        for name in redact_list:
+            item['text'].replace(name, '[NAME REDACTED]')
+    return posts
 
 if __name__ == "__main__":
     scrape()
