@@ -1,76 +1,113 @@
-'''
-scraper.py
-
-Written by Justen Stall for University of Dayton Sociology Department
-
-Usage
-===================================
-Usage: python3 scraper.py --help [for options]
-
-Required Packages: see environment.yml for required packages
-
-Description
-===================================
-This Main class is defined to efficently get the relevent words to search for, read files that may be relevant, and compare the two and compute a relevancy score
-
-Class Attributes
-===================================
-newWordList --> The Word list, as a set of key value pairs
-	- type: dictionary
-documents --> self defined class, see documentation for further explanation in document.py
-    -type: document
-listOfWordCounts --> list containing the words of each document split on special characters and stripped for common words
-    - type: list 
-allWordCount --> a count of all the words that were parsed in a file/directory
-    - int
-idfs --> inverse document frequency, see http://www.tfidf.com/ for further info
-    - type: dictionary
-tf --> term frequency, see http://www.tfidf.com/ for further info
-    - type: dictionary
-tfidf --> term frequency - inverse document frequency model, the resulting relevancy score
-    - type: dictionary
-relevanceScore --> derived from the tf-idf model, a score given to a document based on its similarity to a predefined wordlist and other factors
-    - type: float
-'''
-from typing import Optional
-import typer
 import facebook_scraper
+import json
 
-app = typer.Typer()
+# Keyword lists
+keyword_list = ['sleep']
 
-@app.command()
-def hello(name: Optional[str] = None):
-    """
-    Extra help text
-    """
-    if name:
-        typer.echo(f"Hello {name}")
-    else:
-        typer.echo("Hello World!")
+comment_minimum = 50
 
 
-@app.command()
-def bye(name: Optional[str] = None):
-    if name:
-        typer.echo(f"Bye {name}")
-    else:
-        typer.echo("Goodbye!")
+# Global lists for output
+# posts_json_list = []
+posts_flat_list = []
 
+censor_names = []
 
-@app.command()
-def group(url: str = typer.Argument(...)):
-    if url == None:
-        return typer.Exit(code=128)
-    
-    for post in facebook_scraper.get_posts(
-        'https://www.facebook.com/groups/babysleeptrainingtips', 
-        # 'justenstall@gmail.com',
-        group='babysleeptrainingtips',
-        account=('justenstall@gmail.com', '7kd28w*Rdf9igzV8wYvH')):
-        print(post['text'][:50])
+def scrape():
+    now = datetime.now()
+    results_folder = 'results-{}'.format()
 
-    
+    posts = facebook_scraper.get_posts(group='babysleeptrainingtips', pages=3, cookies="/Users/justenstall/Downloads/facebook.com_cookies.txt", options={"comments": True})
+    for post in posts:
 
+        # TODO: filtering based on post['comments'] count and keyword presence in post['text']
+
+        if post['comments'] < comment_minimum:
+            continue
+
+        keyword_match = false
+        for keyword in keyword_list:
+            if keyword in post['text']:
+                keyword_match = True
+
+        if not keyword_match:
+            continue
+
+        # Create post and add to list
+        post_dict = {
+            'id': post['post_id'],
+            'url': post['post_url'],
+            'text': post['text'],
+            'time': post['time'].strftime("%m/%d/%Y, %H:%M:%S"),
+        } 
+        posts_flat_list.append(post_dict)
+
+        # Store poster name to censor
+        censor_names.append(post['username'])
+
+        for comment in post['comments_full']:
+
+            # Create comment and add to list
+            comment_dict = {
+                'id': comment['comment_id'],
+                'url': comment['comment_url'],
+                'text': comment['comment_text'],
+                'time': comment['comment_time'].strftime("%m/%d/%Y, %H:%M:%S"),
+            }
+            posts_flat_list.append(comment_dict)
+
+            # Store commenter name to censor
+            censor_names.append(comment['commenter_name'])
+
+        for item in posts_flat_list:
+            for name in censor_names:
+                item['text'].replace(name, '[NAME REDACTED]')
+
+        
+        # TODO: write to JSON file named post ID
+        
+
+        with open(os.path.join('results-{}'.format, '{}.json'.format(post['post_id'])), 'w') as fp:
+            json.dump(posts_flat_list, fp)
+
+    # TODO: change output shape to two dimensional array (flatten comments and replies into single list)
+    # TODO: remove names from comment text
+
+    with open('result.json', 'w') as fp:
+        json.dump(formatted_posts, fp)
+            
+
+# text stores the post's text
+# comments_full stores a list of comment dicts for each post
+# comment_text stores the comment's text
+# replies stores a list of comments responding to that comment
+# commenter_id stores a number that refers to the user
+# comment_time is the time the comment was made
+
+# Considerations: remove commenter name from replies to their comment
+
+# recursively get all replies to a comment
+def get_replies(comment):
+    replies = []
+    if 'replies' in comment:
+        for reply in comment['replies']:
+            comment_dict = {
+                'url': reply['comment_url'],
+                'text': reply['comment_text'],
+                'time': reply['comment_time'].strftime("%m/%d/%Y, %H:%M:%S"),
+                'replied_to': reply['comment_url'],
+                'replies': get_replies(reply)
+            }
+
+            censor_names.append(reply['commenter_name'])
+            replies.append(comment_dict)
+    return replies
 
 if __name__ == "__main__":
-    app()
+    scrape()
+
+
+def format_output(post_list):
+    output_posts = []
+    for post in post_list:
+        post_dict = 
