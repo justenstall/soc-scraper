@@ -3,6 +3,7 @@ import json
 import csv
 from datetime import datetime
 import os
+import time
 
 # Path to facebook cookies
 cookies_path = '/Users/justenstall/Downloads/facebook.com_cookies.txt'
@@ -17,14 +18,11 @@ keyword_list = ['sleep', 'sleep train', 'co-sleep']
 comment_minimum = 50
 
 # Names that need may need censored from comment replies
-redact_list = []
+names_list = []
 
 # scrape the specified group for posts
 # output is a collection of CSV files, in a folder named by the group and the time requested, and organized into one subfolder per keyword
 def scrape():
-    # Get posts from facebook-scraper
-    posts = facebook_scraper.get_posts(group=group_name, pages=10, sleep=5,cookies=cookies_path, options={"comments": True, "progress": True})
-
     # Create result directory for data to output to
     result_dir = '{group}_{time}'.format(group=group_name, time=datetime.now().strftime("%m-%d_%H-%M-%S"))
     os.makedirs(result_dir)
@@ -34,10 +32,16 @@ def scrape():
     for keyword in keyword_list:
         os.makedirs(os.path.join(result_dir, keyword))
 
+    # TODO: figure out if there is sleep and how to do that if not
+    # Get posts from facebook-scraper
+    posts = facebook_scraper.get_posts(group=group_name, pages=3, cookies=cookies_path, options={"comments": True})
+
     posts_json = []
 
     # Loop through posts to create list
     for post in posts:
+        # time.sleep(30)
+
         posts_json.append(post)
 
         keyword_match_list = []
@@ -53,19 +57,22 @@ def scrape():
         post_and_comments = parse_post(post)
 
         post_and_comments = redact_posts(post_and_comments)
+
+        print("Scraped post:", post_and_comments[0]['url'])
+
+        # print("Redacted names from post. Names:", ', '.join(names_list))
  
         if len(post_and_comments) > 0:
             keys = post_and_comments[0].keys()
 
             for keyword in keyword_match_list:
-                with open(os.path.join(result_dir, keyword, '{}.csv'.format(post['post_id'])), 'w', encoding='utf-8-sig', newline='') as output_file:
+                filename = os.path.join(result_dir, keyword, '{}.csv'.format(post['post_id']))
+                with open(filename, 'w', encoding='utf-8-sig', newline='') as output_file:
                     dict_writer = csv.DictWriter(output_file, keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(post_and_comments)
 
-    # Dump full content before parsing more
-    with open(os.path.join(result_dir, "posts_full.json"), "w", encoding ='utf8') as output_file:
-        json.dump(posts_json, output_file, ensure_ascii=False, indent=4)
+                    print("Wrote file:", filename)
 
 # Return true if keyword is found
 def check_keyword(keyword, text):
@@ -89,10 +96,8 @@ def parse_post(post):
     )
     post_and_comments.append(post_dict)
 
-    print("Scraped post:", post_dict['url'])
-
     # Store poster name to censor
-    redact_list.append(post['username'])
+    names_list.append(post['username'])
 
     for comment in post['comments_full']:
         comment_and_replies = parse_comment(post['post_id'], comment)
@@ -113,8 +118,10 @@ def parse_comment(post_id, comment):
     )
     comment_and_replies.append(comment_dict)
 
+    # print("Scraped comment:", comment_dict['url'])
+
     # Store commenter name to censor
-    redact_list.append(comment['commenter_name'])
+    names_list.append(comment['commenter_name'])
 
     for reply in comment['replies']:
         reply_dict = parse_reply(comment['comment_id'], reply)
@@ -131,7 +138,9 @@ def parse_reply(comment_id, reply):
         reply['comment_time']
     )
 
-    redact_list.append(reply['commenter_name'])
+    # print("Scraped reply:", reply_dict['url'])
+
+    names_list.append(reply['commenter_name'])
 
     return reply_dict
 
@@ -144,12 +153,12 @@ def create_post_dict(id, url, reply_to, text, time):
         'time': time.strftime("%m/%d/%Y, %H:%M:%S"),
     }
 
-def redact_posts(posts):
-    print(posts)
-    for item in posts:
-        for name in redact_list:
-            item['text'].replace(name, '[NAME REDACTED]')
-    return posts
+def redact_posts(post_and_comments):
+    for i, p in enumerate(post_and_comments):
+        for name in names_list:
+            if name != '':
+                post_and_comments[i]['text'] = post_and_comments[i]['text'].replace(name, '[NAME REDACTED]')
+    return post_and_comments
 
 if __name__ == "__main__":
     scrape()
